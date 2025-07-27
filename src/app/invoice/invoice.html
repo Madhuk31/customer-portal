@@ -1,0 +1,111 @@
+<div class="invoice-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Invoice Details</h1>
+      <p>View and manage your invoice information</p>
+    </div>
+    <button class="back-btn" (click)="goBack()">
+      ← Back to Dashboard
+    </button>
+  </div>
+
+  <div class="content-body">
+    <div class="invoice-card">
+      <div class="card-header">
+        <h2>Invoice Summary</h2>
+        <div class="header-actions">
+          <button class="action-btn primary">Export PDF</button>
+          <button class="action-btn secondary">Print</button>
+        </div>
+      </div>
+
+      <div class="invoice-table-container">
+        <table class="invoice-table">
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Date</th>
+              <th>Due Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>INV-2024-001</td>
+              <td>2024-01-15</td>
+              <td>2024-02-15</td>
+              <td class="amount">$2,500.00</td>
+              <td><span class="status paid">Paid</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>INV-2024-002</td>
+              <td>2024-01-20</td>
+              <td>2024-02-20</td>
+              <td class="amount">$1,800.00</td>
+              <td><span class="status pending">Pending</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>INV-2024-003</td>
+              <td>2024-01-25</td>
+              <td>2024-02-25</td>
+              <td class="amount">$3,200.00</td>
+              <td><span class="status overdue">Overdue</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>INV-2024-004</td>
+              <td>2024-02-01</td>
+              <td>2024-03-01</td>
+              <td class="amount">$1,500.00</td>
+              <td><span class="status paid">Paid</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summary-stats">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <h3>Total Invoiced</h3>
+            <p class="stat-value">$9,000.00</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <h3>Paid</h3>
+            <p class="stat-value">$4,000.00</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-content">
+            <h3>Pending</h3>
+            <p class="stat-value">$1,800.00</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-content">
+            <h3>Overdue</h3>
+            <p class="stat-value">$3,200.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

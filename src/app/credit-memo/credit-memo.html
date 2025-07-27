@@ -1,0 +1,138 @@
+<div class="credit-memo-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Credit/Debit Memo</h1>
+      <p>View and manage your credit and debit memo transactions</p>
+    </div>
+    <button class="back-btn" (click)="goBack()">
+      ← Back to Dashboard
+    </button>
+  </div>
+
+  <div class="content-body">
+    <div class="memo-card">
+      <div class="card-header">
+        <h2>Memo Transactions</h2>
+        <div class="header-actions">
+          <button class="action-btn primary">New Memo</button>
+          <button class="action-btn secondary">Export</button>
+        </div>
+      </div>
+
+      <div class="memo-table-container">
+        <table class="memo-table">
+          <thead>
+            <tr>
+              <th>Memo #</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Reference</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CM-2024-001</td>
+              <td>2024-01-20</td>
+              <td><span class="memo-type credit">Credit</span></td>
+              <td>INV-2024-001</td>
+              <td class="amount credit">-$250.00</td>
+              <td><span class="status applied">Applied</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>DM-2024-001</td>
+              <td>2024-01-25</td>
+              <td><span class="memo-type debit">Debit</span></td>
+              <td>INV-2024-002</td>
+              <td class="amount debit">+$180.00</td>
+              <td><span class="status pending">Pending</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>CM-2024-002</td>
+              <td>2024-02-01</td>
+              <td><span class="memo-type credit">Credit</span></td>
+              <td>INV-2024-003</td>
+              <td class="amount credit">-$320.00</td>
+              <td><span class="status applied">Applied</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>DM-2024-002</td>
+              <td>2024-02-05</td>
+              <td><span class="memo-type debit">Debit</span></td>
+              <td>INV-2024-004</td>
+              <td class="amount debit">+$150.00</td>
+              <td><span class="status applied">Applied</span></td>
+              <td>
+                <button class="view-btn">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="memo-summary">
+        <h3>Memo Summary</h3>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="summary-label">Total Credits</div>
+            <div class="summary-value credit">-$570.00</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Total Debits</div>
+            <div class="summary-value debit">+$330.00</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Net Balance</div>
+            <div class="summary-value net">-$240.00</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Applied Memos</div>
+            <div class="summary-value">3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-stats">
+        <div class="stat-card">
+          <div class="stat-icon">📝</div>
+          <div class="stat-content">
+            <h3>Total Memos</h3>
+            <p class="stat-value">4</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <h3>Applied</h3>
+            <p class="stat-value">3</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-content">
+            <h3>Pending</h3>
+            <p class="stat-value">1</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <h3>Net Impact</h3>
+            <p class="stat-value">-$240.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

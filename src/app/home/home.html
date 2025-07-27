@@ -1,0 +1,1043 @@
+<div class="home-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Customer Portal</h2>
+    </div>
+    
+    <div class="sidebar-info">
+      <div class="info-section">
+        <h3>Welcome!</h3>
+        <p>Access your customer information and financial data through the main dashboard.</p>
+      </div>
+      
+      <div class="info-section">
+        <h3>Quick Info</h3>
+        <ul class="info-list">
+          <li>Customer ID: CUST-001</li>
+          <li>Account Status: Active</li>
+          <li>Last Login: Today</li>
+          <li>Total Orders: 15</li>
+        </ul>
+      </div>
+      
+      <div class="info-section">
+        <h3>Support</h3>
+        <p>Need help? Contact our support team:</p>
+        <p>📧 support&#64;company.com</p>
+        <p>📞 +1-800-123-4567</p>
+      </div>
+    </div>
+    
+    <!-- Logout Button -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="nav-icon">🚪</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="content-header">
+      <h1>Customer Dashboard</h1>
+      <p>Manage your account and view all information</p>
+    </header>
+    
+    <div class="content-body">
+      <!-- Main Navigation Tabs -->
+      <div class="nav-tabs">
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'home'"
+          (click)="setActiveTab('home')"
+        >
+          🏠 Home
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'profile'"
+          (click)="setActiveTab('profile')"
+        >
+          👤 Profile
+        </button>
+        <div class="dropdown-container">
+          <button 
+            class="tab-btn dropdown-toggle" 
+            [class.active]="activeTab === 'dashboard'"
+            (click)="toggleDropdown('dashboard')"
+          >
+            📊 Dashboard
+            <span class="dropdown-arrow" [class.expanded]="expandedDropdowns.dashboard">▼</span>
+          </button>
+          <!-- Dashboard Dropdown Menu -->
+          <div class="dropdown-menu" [class.show]="expandedDropdowns.dashboard">
+            <button class="dropdown-item" (click)="navigateToSubTab('inquiry')">
+              ❓ Inquiry Data
+            </button>
+            <button class="dropdown-item" (click)="navigateToSubTab('saleorder')">
+              📋 Sale Order Data
+            </button>
+            <button class="dropdown-item" (click)="navigateToSubTab('delivery')">
+              🚚 List of Delivery
+            </button>
+          </div>
+        </div>
+        <div class="dropdown-container">
+          <button 
+            class="tab-btn dropdown-toggle" 
+            [class.active]="activeTab === 'financial'"
+            (click)="toggleDropdown('financial')"
+          >
+            💰 Financial Sheet
+            <span class="dropdown-arrow" [class.expanded]="expandedDropdowns.financial">▼</span>
+          </button>
+          <!-- Financial Sheet Dropdown Menu -->
+          <div class="dropdown-menu" [class.show]="expandedDropdowns.financial">
+            <button class="dropdown-item" (click)="navigateToSubTab('invoice')">
+              📄 Invoice Details
+            </button>
+            <button class="dropdown-item" (click)="navigateToSubTab('payments')">
+              💳 Payments & Aging
+            </button>
+            <button class="dropdown-item" (click)="navigateToSubTab('memo')">
+              📝 Credit/Debit Memo
+            </button>
+            <button class="dropdown-item" (click)="navigateToSubTab('overallsales')">
+              📊 Overall Sales Data
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'home'">
+        <div class="welcome-card">
+          <div class="welcome-icon">🎉</div>
+          <h2>Welcome to Your Customer Portal</h2>
+          <p>You have successfully logged in. Use the navigation tabs above to access different sections of your customer portal.</p>
+          <div class="quick-stats">
+            <div class="stat-item">
+              <span class="stat-number">15</span>
+              <span class="stat-label">Total Orders</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">4</span>
+              <span class="stat-label">Active Invoices</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">$9,000</span>
+              <span class="stat-label">Total Value</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'profile'">
+        <div class="profile-card">
+          <div class="card-header">
+            <h2>Customer Profile</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">Edit Profile</button>
+              <button class="action-btn secondary">Download</button>
+            </div>
+          </div>
+
+          <div class="profile-content">
+            <div class="profile-section">
+              <h3>Personal Information</h3>
+              <div class="profile-grid">
+                <div class="profile-item">
+                  <label>Customer ID:</label>
+                  <span>CUST-001</span>
+                </div>
+                <div class="profile-item">
+                  <label>Full Name:</label>
+                  <span>John Smith</span>
+                </div>
+                <div class="profile-item">
+                  <label>Email:</label>
+                  <span>john.smith&#64;email.com</span>
+                </div>
+                <div class="profile-item">
+                  <label>Phone:</label>
+                  <span>+1 (555) 123-4567</span>
+                </div>
+                <div class="profile-item">
+                  <label>Company:</label>
+                  <span>ABC Corporation</span>
+                </div>
+                <div class="profile-item">
+                  <label>Address:</label>
+                  <span>123 Business St, City, State 12345</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <h3>Account Information</h3>
+              <div class="profile-grid">
+                <div class="profile-item">
+                  <label>Account Status:</label>
+                  <span class="status-badge active">Active</span>
+                </div>
+                <div class="profile-item">
+                  <label>Member Since:</label>
+                  <span>January 2020</span>
+                </div>
+                <div class="profile-item">
+                  <label>Credit Limit:</label>
+                  <span>$50,000</span>
+                </div>
+                <div class="profile-item">
+                  <label>Payment Terms:</label>
+                  <span>Net 30</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inquiry Data Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'inquiry'">
+        <div class="inquiry-card">
+          <div class="card-header">
+            <h2>Inquiry Data</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">New Inquiry</button>
+              <button class="action-btn secondary">Export</button>
+            </div>
+          </div>
+
+          <div class="inquiry-table-container">
+            <table class="inquiry-table">
+              <thead>
+                <tr>
+                  <th>Inquiry #</th>
+                  <th>Date</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>INQ-2024-001</td>
+                  <td>2024-01-15</td>
+                  <td>Product Information Request</td>
+                  <td><span class="status open">Open</span></td>
+                  <td><span class="priority high">High</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INQ-2024-002</td>
+                  <td>2024-01-20</td>
+                  <td>Pricing Inquiry</td>
+                  <td><span class="status resolved">Resolved</span></td>
+                  <td><span class="priority medium">Medium</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INQ-2024-003</td>
+                  <td>2024-01-25</td>
+                  <td>Technical Support</td>
+                  <td><span class="status in-progress">In Progress</span></td>
+                  <td><span class="priority high">High</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INQ-2024-004</td>
+                  <td>2024-02-01</td>
+                  <td>Order Status Check</td>
+                  <td><span class="status resolved">Resolved</span></td>
+                  <td><span class="priority low">Low</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">📝</div>
+              <div class="stat-content">
+                <h3>Total Inquiries</h3>
+                <p class="stat-value">4</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <h3>Open</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🔄</div>
+              <div class="stat-content">
+                <h3>In Progress</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <h3>Resolved</h3>
+                <p class="stat-value">2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sale Order Data Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'saleorder'">
+        <div class="saleorder-card">
+          <div class="card-header">
+            <h2>Sale Order Data</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">New Order</button>
+              <button class="action-btn secondary">Export</button>
+            </div>
+          </div>
+
+          <div class="saleorder-table-container">
+            <table class="saleorder-table">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Date</th>
+                  <th>Items</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SO-2024-001</td>
+                  <td>2024-01-10</td>
+                  <td>5 items</td>
+                  <td class="amount">$2,500.00</td>
+                  <td><span class="status completed">Completed</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>SO-2024-002</td>
+                  <td>2024-01-15</td>
+                  <td>3 items</td>
+                  <td class="amount">$1,800.00</td>
+                  <td><span class="status processing">Processing</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>SO-2024-003</td>
+                  <td>2024-01-20</td>
+                  <td>7 items</td>
+                  <td class="amount">$3,200.00</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>SO-2024-004</td>
+                  <td>2024-01-25</td>
+                  <td>2 items</td>
+                  <td class="amount">$1,500.00</td>
+                  <td><span class="status completed">Completed</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">📦</div>
+              <div class="stat-content">
+                <h3>Total Orders</h3>
+                <p class="stat-value">4</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <h3>Completed</h3>
+                <p class="stat-value">2</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🔄</div>
+              <div class="stat-content">
+                <h3>Processing</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <h3>Pending</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- List of Delivery Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'delivery'">
+        <div class="delivery-card">
+          <div class="card-header">
+            <h2>List of Delivery</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">Track Delivery</button>
+              <button class="action-btn secondary">Export</button>
+            </div>
+          </div>
+
+          <div class="delivery-table-container">
+            <table class="delivery-table">
+              <thead>
+                <tr>
+                  <th>Delivery #</th>
+                  <th>Order #</th>
+                  <th>Date</th>
+                  <th>Carrier</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DEL-2024-001</td>
+                  <td>SO-2024-001</td>
+                  <td>2024-01-12</td>
+                  <td>FedEx</td>
+                  <td><span class="status delivered">Delivered</span></td>
+                  <td>
+                    <button class="view-btn">Track</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DEL-2024-002</td>
+                  <td>SO-2024-002</td>
+                  <td>2024-01-18</td>
+                  <td>UPS</td>
+                  <td><span class="status in-transit">In Transit</span></td>
+                  <td>
+                    <button class="view-btn">Track</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DEL-2024-003</td>
+                  <td>SO-2024-003</td>
+                  <td>2024-01-22</td>
+                  <td>DHL</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="view-btn">Track</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DEL-2024-004</td>
+                  <td>SO-2024-004</td>
+                  <td>2024-01-28</td>
+                  <td>FedEx</td>
+                  <td><span class="status delivered">Delivered</span></td>
+                  <td>
+                    <button class="view-btn">Track</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">🚚</div>
+              <div class="stat-content">
+                <h3>Total Deliveries</h3>
+                <p class="stat-value">4</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <h3>Delivered</h3>
+                <p class="stat-value">2</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🔄</div>
+              <div class="stat-content">
+                <h3>In Transit</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <h3>Pending</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'invoice'">
+        <div class="invoice-card">
+          <div class="card-header">
+            <h2>Invoice Details</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">Export PDF</button>
+              <button class="action-btn secondary">Print</button>
+            </div>
+          </div>
+
+          <div class="invoice-table-container">
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Date</th>
+                  <th>Due Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>INV-2024-001</td>
+                  <td>2024-01-15</td>
+                  <td>2024-02-15</td>
+                  <td class="amount">$2,500.00</td>
+                  <td><span class="status paid">Paid</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INV-2024-002</td>
+                  <td>2024-01-20</td>
+                  <td>2024-02-20</td>
+                  <td class="amount">$1,800.00</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INV-2024-003</td>
+                  <td>2024-01-25</td>
+                  <td>2024-02-25</td>
+                  <td class="amount">$3,200.00</td>
+                  <td><span class="status overdue">Overdue</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>INV-2024-004</td>
+                  <td>2024-02-01</td>
+                  <td>2024-03-01</td>
+                  <td class="amount">$1,500.00</td>
+                  <td><span class="status paid">Paid</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-content">
+                <h3>Total Invoiced</h3>
+                <p class="stat-value">$9,000.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <h3>Paid</h3>
+                <p class="stat-value">$4,000.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <h3>Pending</h3>
+                <p class="stat-value">$1,800.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⚠️</div>
+              <div class="stat-content">
+                <h3>Overdue</h3>
+                <p class="stat-value">$3,200.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payments Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'payments'">
+        <div class="payments-card">
+          <div class="card-header">
+            <h2>Payments and Aging</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">Download Report</button>
+              <button class="action-btn secondary">Filter</button>
+            </div>
+          </div>
+
+          <div class="payment-table-container">
+            <table class="payment-table">
+              <thead>
+                <tr>
+                  <th>Payment #</th>
+                  <th>Date</th>
+                  <th>Invoice #</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PAY-2024-001</td>
+                  <td>2024-02-10</td>
+                  <td>INV-2024-001</td>
+                  <td class="amount">$2,500.00</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>PAY-2024-002</td>
+                  <td>2024-02-15</td>
+                  <td>INV-2024-004</td>
+                  <td class="amount">$1,500.00</td>
+                  <td>Credit Card</td>
+                  <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>PAY-2024-003</td>
+                  <td>2024-02-20</td>
+                  <td>INV-2024-002</td>
+                  <td class="amount">$1,800.00</td>
+                  <td>Check</td>
+                  <td><span class="status pending">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="aging-section">
+            <h3>Account Aging Analysis</h3>
+            <div class="aging-chart">
+              <div class="aging-bar">
+                <div class="aging-label">Current (0-30 days)</div>
+                <div class="aging-progress">
+                  <div class="progress-fill current" style="width: 20%"></div>
+                </div>
+                <div class="aging-amount">$1,800.00</div>
+              </div>
+              <div class="aging-bar">
+                <div class="aging-label">31-60 days</div>
+                <div class="aging-progress">
+                  <div class="progress-fill overdue" style="width: 35%"></div>
+                </div>
+                <div class="aging-amount">$3,200.00</div>
+              </div>
+              <div class="aging-bar">
+                <div class="aging-label">61-90 days</div>
+                <div class="aging-progress">
+                  <div class="progress-fill critical" style="width: 0%"></div>
+                </div>
+                <div class="aging-amount">$0.00</div>
+              </div>
+              <div class="aging-bar">
+                <div class="aging-label">90+ days</div>
+                <div class="aging-progress">
+                  <div class="progress-fill critical" style="width: 0%"></div>
+                </div>
+                <div class="aging-amount">$0.00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">💳</div>
+              <div class="stat-content">
+                <h3>Total Payments</h3>
+                <p class="stat-value">$4,000.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📊</div>
+              <div class="stat-content">
+                <h3>Outstanding Balance</h3>
+                <p class="stat-value">$5,000.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏰</div>
+              <div class="stat-content">
+                <h3>Average Payment Time</h3>
+                <p class="stat-value">25 days</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🎯</div>
+              <div class="stat-content">
+                <h3>Payment Rate</h3>
+                <p class="stat-value">44.4%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credit Memo Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'memo'">
+        <div class="memo-card">
+          <div class="card-header">
+            <h2>Credit/Debit Memo</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">New Memo</button>
+              <button class="action-btn secondary">Export</button>
+            </div>
+          </div>
+
+          <div class="memo-table-container">
+            <table class="memo-table">
+              <thead>
+                <tr>
+                  <th>Memo #</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Reference</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CM-2024-001</td>
+                  <td>2024-01-20</td>
+                  <td><span class="memo-type credit">Credit</span></td>
+                  <td>INV-2024-001</td>
+                  <td class="amount credit">-$250.00</td>
+                  <td><span class="status applied">Applied</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DM-2024-001</td>
+                  <td>2024-01-25</td>
+                  <td><span class="memo-type debit">Debit</span></td>
+                  <td>INV-2024-002</td>
+                  <td class="amount debit">+$180.00</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>CM-2024-002</td>
+                  <td>2024-02-01</td>
+                  <td><span class="memo-type credit">Credit</span></td>
+                  <td>INV-2024-003</td>
+                  <td class="amount credit">-$320.00</td>
+                  <td><span class="status applied">Applied</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DM-2024-002</td>
+                  <td>2024-02-05</td>
+                  <td><span class="memo-type debit">Debit</span></td>
+                  <td>INV-2024-004</td>
+                  <td class="amount debit">+$150.00</td>
+                  <td><span class="status applied">Applied</span></td>
+                  <td>
+                    <button class="view-btn">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="memo-summary">
+            <h3>Memo Summary</h3>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <div class="summary-label">Total Credits</div>
+                <div class="summary-value credit">-$570.00</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Total Debits</div>
+                <div class="summary-value debit">+$330.00</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Net Balance</div>
+                <div class="summary-value net">-$240.00</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Applied Memos</div>
+                <div class="summary-value">3</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">📝</div>
+              <div class="stat-content">
+                <h3>Total Memos</h3>
+                <p class="stat-value">4</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <h3>Applied</h3>
+                <p class="stat-value">3</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <h3>Pending</h3>
+                <p class="stat-value">1</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-content">
+                <h3>Net Impact</h3>
+                <p class="stat-value">-$240.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall Sales Data Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'overallsales'">
+        <div class="overallsales-card">
+          <div class="card-header">
+            <h2>Overall Sales Data</h2>
+            <div class="header-actions">
+              <button class="action-btn primary">Generate Report</button>
+              <button class="action-btn secondary">Export Data</button>
+            </div>
+          </div>
+
+          <div class="sales-overview">
+            <div class="sales-period-selector">
+              <h3>Sales Period: January 2024 - February 2024</h3>
+            </div>
+
+            <div class="sales-summary-grid">
+              <div class="sales-summary-item">
+                <div class="summary-header">
+                  <h4>Total Sales</h4>
+                  <span class="trend positive">↗ +12.5%</span>
+                </div>
+                <div class="summary-value">$45,250.00</div>
+                <div class="summary-detail">vs $40,200.00 last period</div>
+              </div>
+              
+              <div class="sales-summary-item">
+                <div class="summary-header">
+                  <h4>Orders Count</h4>
+                  <span class="trend positive">↗ +8.3%</span>
+                </div>
+                <div class="summary-value">156</div>
+                <div class="summary-detail">vs 144 last period</div>
+              </div>
+              
+              <div class="sales-summary-item">
+                <div class="summary-header">
+                  <h4>Average Order Value</h4>
+                  <span class="trend positive">↗ +3.9%</span>
+                </div>
+                <div class="summary-value">$290.06</div>
+                <div class="summary-detail">vs $279.17 last period</div>
+              </div>
+              
+              <div class="sales-summary-item">
+                <div class="summary-header">
+                  <h4>Conversion Rate</h4>
+                  <span class="trend positive">↗ +2.1%</span>
+                </div>
+                <div class="summary-value">68.5%</div>
+                <div class="summary-detail">vs 67.1% last period</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sales-table-container">
+            <h3>Monthly Sales Breakdown</h3>
+            <table class="sales-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Orders</th>
+                  <th>Revenue</th>
+                  <th>Avg Order</th>
+                  <th>Growth</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>January 2024</td>
+                  <td>78</td>
+                  <td class="amount">$22,650.00</td>
+                  <td>$290.38</td>
+                  <td><span class="growth positive">+15.2%</span></td>
+                  <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>February 2024</td>
+                  <td>78</td>
+                  <td class="amount">$22,600.00</td>
+                  <td>$289.74</td>
+                  <td><span class="growth positive">+9.8%</span></td>
+                  <td><span class="status in-progress">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td>December 2023</td>
+                  <td>72</td>
+                  <td class="amount">$20,580.00</td>
+                  <td>$285.83</td>
+                  <td><span class="growth positive">+7.3%</span></td>
+                  <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>November 2023</td>
+                  <td>68</td>
+                  <td class="amount">$19,180.00</td>
+                  <td>$282.06</td>
+                  <td><span class="growth negative">-2.1%</span></td>
+                  <td><span class="status completed">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sales-categories">
+            <h3>Sales by Category</h3>
+            <div class="category-grid">
+              <div class="category-item">
+                <div class="category-header">
+                  <h4>Electronics</h4>
+                  <span class="category-percentage">35%</span>
+                </div>
+                <div class="category-amount">$15,837.50</div>
+                <div class="category-progress">
+                  <div class="progress-fill" style="width: 35%"></div>
+                </div>
+              </div>
+              
+              <div class="category-item">
+                <div class="category-header">
+                  <h4>Clothing</h4>
+                  <span class="category-percentage">28%</span>
+                </div>
+                <div class="category-amount">$12,670.00</div>
+                <div class="category-progress">
+                  <div class="progress-fill" style="width: 28%"></div>
+                </div>
+              </div>
+              
+              <div class="category-item">
+                <div class="category-header">
+                  <h4>Home & Garden</h4>
+                  <span class="category-percentage">22%</span>
+                </div>
+                <div class="category-amount">$9,955.00</div>
+                <div class="category-progress">
+                  <div class="progress-fill" style="width: 22%"></div>
+                </div>
+              </div>
+              
+              <div class="category-item">
+                <div class="category-header">
+                  <h4>Books</h4>
+                  <span class="category-percentage">15%</span>
+                </div>
+                <div class="category-amount">$6,787.50</div>
+                <div class="category-progress">
+                  <div class="progress-fill" style="width: 15%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-card">
+              <div class="stat-icon">📈</div>
+              <div class="stat-content">
+                <h3>Total Revenue</h3>
+                <p class="stat-value">$45,250.00</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📦</div>
+              <div class="stat-content">
+                <h3>Total Orders</h3>
+                <p class="stat-value">156</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-content">
+                <h3>Avg Order Value</h3>
+                <p class="stat-value">$290.06</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🎯</div>
+              <div class="stat-content">
+                <h3>Growth Rate</h3>
+                <p class="stat-value">+12.5%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

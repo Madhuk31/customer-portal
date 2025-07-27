@@ -1,0 +1,129 @@
+<div class="payments-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Payments and Aging</h1>
+      <p>Track your payment history and account aging analysis</p>
+    </div>
+    <button class="back-btn" (click)="goBack()">
+      ← Back to Dashboard
+    </button>
+  </div>
+
+  <div class="content-body">
+    <div class="payments-card">
+      <div class="card-header">
+        <h2>Payment History</h2>
+        <div class="header-actions">
+          <button class="action-btn primary">Download Report</button>
+          <button class="action-btn secondary">Filter</button>
+        </div>
+      </div>
+
+      <div class="payment-table-container">
+        <table class="payment-table">
+          <thead>
+            <tr>
+              <th>Payment #</th>
+              <th>Date</th>
+              <th>Invoice #</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PAY-2024-001</td>
+              <td>2024-02-10</td>
+              <td>INV-2024-001</td>
+              <td class="amount">$2,500.00</td>
+              <td>Bank Transfer</td>
+              <td><span class="status completed">Completed</span></td>
+            </tr>
+            <tr>
+              <td>PAY-2024-002</td>
+              <td>2024-02-15</td>
+              <td>INV-2024-004</td>
+              <td class="amount">$1,500.00</td>
+              <td>Credit Card</td>
+              <td><span class="status completed">Completed</span></td>
+            </tr>
+            <tr>
+              <td>PAY-2024-003</td>
+              <td>2024-02-20</td>
+              <td>INV-2024-002</td>
+              <td class="amount">$1,800.00</td>
+              <td>Check</td>
+              <td><span class="status pending">Pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aging-section">
+        <h3>Account Aging Analysis</h3>
+        <div class="aging-chart">
+          <div class="aging-bar">
+            <div class="aging-label">Current (0-30 days)</div>
+            <div class="aging-progress">
+              <div class="progress-fill current" style="width: 20%"></div>
+            </div>
+            <div class="aging-amount">$1,800.00</div>
+          </div>
+          <div class="aging-bar">
+            <div class="aging-label">31-60 days</div>
+            <div class="aging-progress">
+              <div class="progress-fill overdue" style="width: 35%"></div>
+            </div>
+            <div class="aging-amount">$3,200.00</div>
+          </div>
+          <div class="aging-bar">
+            <div class="aging-label">61-90 days</div>
+            <div class="aging-progress">
+              <div class="progress-fill critical" style="width: 0%"></div>
+            </div>
+            <div class="aging-amount">$0.00</div>
+          </div>
+          <div class="aging-bar">
+            <div class="aging-label">90+ days</div>
+            <div class="aging-progress">
+              <div class="progress-fill critical" style="width: 0%"></div>
+            </div>
+            <div class="aging-amount">$0.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-stats">
+        <div class="stat-card">
+          <div class="stat-icon">💳</div>
+          <div class="stat-content">
+            <h3>Total Payments</h3>
+            <p class="stat-value">$4,000.00</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <h3>Outstanding Balance</h3>
+            <p class="stat-value">$5,000.00</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏰</div>
+          <div class="stat-content">
+            <h3>Average Payment Time</h3>
+            <p class="stat-value">25 days</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-content">
+            <h3>Payment Rate</h3>
+            <p class="stat-value">44.4%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
