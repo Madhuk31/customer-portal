@@ -121,7 +121,20 @@ export class Home implements OnInit {
     this.isLoading.profile = true;
     this.apiService.getCustomerProfile(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.customerProfile = response;
+        console.log('Profile response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUSTOMER_PROFILE_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUSTOMER_PROFILE_KMResponse;
+          if (sapResponse.EV_STATUS === 'S') {
+            this.customerProfile = sapResponse.ES_PROFILE;
+          } else {
+            console.error('SAP Error:', sapResponse.EV_MESSAGE);
+          }
+        } else {
+          this.customerProfile = response;
+        }
+        
         this.isLoading.profile = false;
       },
       error: (error) => {

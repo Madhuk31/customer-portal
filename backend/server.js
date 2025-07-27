@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const request = require('request');
+const X2JS = require('x2js');
 const app = express();
 const PORT = 8000;
 
@@ -70,20 +72,41 @@ app.post('/custlogin', (req, res) => {
 
 // Customer profile endpoint
 app.post('/custprofile', (req, res) => {
-  const { username } = req.body;
-  const customer = mockCustomers[username];
-  
-  if (customer) {
-    res.json({
-      status: 'success',
-      data: customer.profile
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUSTOMER_PROFILE_KM>
+         <IV_CUST_ID>${username}</IV_CUST_ID>
+      </urn:ZFM_CUSTOMER_PROFILE_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zprofile_cuspor_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
     });
-  } else {
-    res.status(404).json({
-      status: 'error',
-      message: 'Customer not found'
-    });
-  }
 });
 
 // Customer inquiry endpoint

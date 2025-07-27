@@ -146,34 +146,46 @@
           </div>
 
           <div class="profile-content">
-            <div class="profile-section">
+            <div class="profile-section" *ngIf="isLoading.profile">
+              <div class="loading-message">Loading customer profile...</div>
+            </div>
+            
+            <div class="profile-section" *ngIf="!isLoading.profile && customerProfile">
               <h3>Personal Information</h3>
               <div class="profile-grid">
                 <div class="profile-item">
                   <label>Customer ID:</label>
-                  <span>CUST-001</span>
+                  <span>{{customerProfile.KUNNR || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Full Name:</label>
-                  <span>John Smith</span>
+                  <label>Customer Name:</label>
+                  <span>{{customerProfile.NAME1 || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Email:</label>
-                  <span>john.smith&#64;email.com</span>
+                  <label>Customer Type:</label>
+                  <span>{{customerProfile.KTOKD || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Phone:</label>
-                  <span>+1 (555) 123-4567</span>
+                  <label>Street Address:</label>
+                  <span>{{customerProfile.STRAS || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Company:</label>
-                  <span>ABC Corporation</span>
+                  <label>City:</label>
+                  <span>{{customerProfile.ORT01 || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Address:</label>
-                  <span>123 Business St, City, State 12345</span>
+                  <label>Postal Code:</label>
+                  <span>{{customerProfile.PSTLZ || 'N/A'}}</span>
+                </div>
+                <div class="profile-item">
+                  <label>Country:</label>
+                  <span>{{customerProfile.LAND1 || 'N/A'}}</span>
                 </div>
               </div>
+            </div>
+            
+            <div class="profile-section" *ngIf="!isLoading.profile && !customerProfile">
+              <div class="error-message">Unable to load customer profile. Please try again.</div>
             </div>
 
             <div class="profile-section">
