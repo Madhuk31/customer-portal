@@ -121,7 +121,20 @@ export class Home implements OnInit {
     this.isLoading.profile = true;
     this.apiService.getCustomerProfile(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.customerProfile = response;
+        console.log('Profile response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUSTOMER_PROFILE_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUSTOMER_PROFILE_KMResponse;
+          if (sapResponse.EV_STATUS === 'S') {
+            this.customerProfile = sapResponse.ES_PROFILE;
+          } else {
+            console.error('SAP Error:', sapResponse.EV_MESSAGE);
+          }
+        } else {
+          this.customerProfile = response;
+        }
+        
         this.isLoading.profile = false;
       },
       error: (error) => {
@@ -137,7 +150,22 @@ export class Home implements OnInit {
     this.isLoading.inquiry = true;
     this.apiService.getCustomerInquiry(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.inquiryData = response;
+        console.log('Inquiry response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_INQUIRY_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_INQUIRY_KMResponse;
+          if (sapResponse.ET_INQUIRY?.item) {
+            this.inquiryData = Array.isArray(sapResponse.ET_INQUIRY.item) 
+              ? sapResponse.ET_INQUIRY.item 
+              : [sapResponse.ET_INQUIRY.item];
+          } else {
+            this.inquiryData = [];
+          }
+        } else {
+          this.inquiryData = response;
+        }
+        
         this.isLoading.inquiry = false;
       },
       error: (error) => {
@@ -153,7 +181,22 @@ export class Home implements OnInit {
     this.isLoading.sales = true;
     this.apiService.getCustomerSales(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.salesData = response;
+        console.log('Sales response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_SALESORDER_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_SALESORDER_KMResponse;
+          if (sapResponse.ET_SALESORDER?.item) {
+            this.salesData = Array.isArray(sapResponse.ET_SALESORDER.item) 
+              ? sapResponse.ET_SALESORDER.item 
+              : [sapResponse.ET_SALESORDER.item];
+          } else {
+            this.salesData = [];
+          }
+        } else {
+          this.salesData = response;
+        }
+        
         this.isLoading.sales = false;
       },
       error: (error) => {
@@ -169,7 +212,22 @@ export class Home implements OnInit {
     this.isLoading.delivery = true;
     this.apiService.getCustomerDelivery(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.deliveryData = response;
+        console.log('Delivery response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_DELIVERY_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_DELIVERY_KMResponse;
+          if (sapResponse.ET_DELIVERY?.item) {
+            this.deliveryData = Array.isArray(sapResponse.ET_DELIVERY.item) 
+              ? sapResponse.ET_DELIVERY.item 
+              : [sapResponse.ET_DELIVERY.item];
+          } else {
+            this.deliveryData = [];
+          }
+        } else {
+          this.deliveryData = response;
+        }
+        
         this.isLoading.delivery = false;
       },
       error: (error) => {
@@ -185,7 +243,22 @@ export class Home implements OnInit {
     this.isLoading.invoice = true;
     this.apiService.getCustomerInvoice(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.invoiceData = response;
+        console.log('Invoice response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_INVOICE_LIST_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_INVOICE_LIST_KMResponse;
+          if (sapResponse.ET_INVOICE_LIST?.item) {
+            this.invoiceData = Array.isArray(sapResponse.ET_INVOICE_LIST.item) 
+              ? sapResponse.ET_INVOICE_LIST.item 
+              : [sapResponse.ET_INVOICE_LIST.item];
+          } else {
+            this.invoiceData = [];
+          }
+        } else {
+          this.invoiceData = response;
+        }
+        
         this.isLoading.invoice = false;
       },
       error: (error) => {
@@ -201,7 +274,22 @@ export class Home implements OnInit {
     this.isLoading.aging = true;
     this.apiService.getCustomerAging(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.agingData = response;
+        console.log('Aging response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_PAY_AGING_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_PAY_AGING_KMResponse;
+          if (sapResponse.ET_CUSTOMER_AGING?.item) {
+            this.agingData = Array.isArray(sapResponse.ET_CUSTOMER_AGING.item) 
+              ? sapResponse.ET_CUSTOMER_AGING.item 
+              : [sapResponse.ET_CUSTOMER_AGING.item];
+          } else {
+            this.agingData = [];
+          }
+        } else {
+          this.agingData = response;
+        }
+        
         this.isLoading.aging = false;
       },
       error: (error) => {
@@ -217,7 +305,22 @@ export class Home implements OnInit {
     this.isLoading.creditDebit = true;
     this.apiService.getCustomerCreditDebit(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.creditDebitData = response;
+        console.log('Credit/Debit response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_CRE_DEB_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_CRE_DEB_KMResponse;
+          if (sapResponse.ET_CRED_DEB?.item) {
+            this.creditDebitData = Array.isArray(sapResponse.ET_CRED_DEB.item) 
+              ? sapResponse.ET_CRED_DEB.item 
+              : [sapResponse.ET_CRED_DEB.item];
+          } else {
+            this.creditDebitData = [];
+          }
+        } else {
+          this.creditDebitData = response;
+        }
+        
         this.isLoading.creditDebit = false;
       },
       error: (error) => {
@@ -233,7 +336,22 @@ export class Home implements OnInit {
     this.isLoading.overallSales = true;
     this.apiService.getCustomerOverallSales(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.overallSalesData = response;
+        console.log('Overall Sales response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_OVERALL_SALES_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_OVERALL_SALES_KMResponse;
+          if (sapResponse.ET_OVERALL_SALES?.item) {
+            this.overallSalesData = Array.isArray(sapResponse.ET_OVERALL_SALES.item) 
+              ? sapResponse.ET_OVERALL_SALES.item 
+              : [sapResponse.ET_OVERALL_SALES.item];
+          } else {
+            this.overallSalesData = [];
+          }
+        } else {
+          this.overallSalesData = response;
+        }
+        
         this.isLoading.overallSales = false;
       },
       error: (error) => {

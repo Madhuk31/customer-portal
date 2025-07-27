@@ -146,34 +146,46 @@
           </div>
 
           <div class="profile-content">
-            <div class="profile-section">
+            <div class="profile-section" *ngIf="isLoading.profile">
+              <div class="loading-message">Loading customer profile...</div>
+            </div>
+            
+            <div class="profile-section" *ngIf="!isLoading.profile && customerProfile">
               <h3>Personal Information</h3>
               <div class="profile-grid">
                 <div class="profile-item">
                   <label>Customer ID:</label>
-                  <span>CUST-001</span>
+                  <span>{{customerProfile.KUNNR || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Full Name:</label>
-                  <span>John Smith</span>
+                  <label>Customer Name:</label>
+                  <span>{{customerProfile.NAME1 || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Email:</label>
-                  <span>john.smith&#64;email.com</span>
+                  <label>Customer Type:</label>
+                  <span>{{customerProfile.KTOKD || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Phone:</label>
-                  <span>+1 (555) 123-4567</span>
+                  <label>Street Address:</label>
+                  <span>{{customerProfile.STRAS || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Company:</label>
-                  <span>ABC Corporation</span>
+                  <label>City:</label>
+                  <span>{{customerProfile.ORT01 || 'N/A'}}</span>
                 </div>
                 <div class="profile-item">
-                  <label>Address:</label>
-                  <span>123 Business St, City, State 12345</span>
+                  <label>Postal Code:</label>
+                  <span>{{customerProfile.PSTLZ || 'N/A'}}</span>
+                </div>
+                <div class="profile-item">
+                  <label>Country:</label>
+                  <span>{{customerProfile.LAND1 || 'N/A'}}</span>
                 </div>
               </div>
+            </div>
+            
+            <div class="profile-section" *ngIf="!isLoading.profile && !customerProfile">
+              <div class="error-message">Unable to load customer profile. Please try again.</div>
             </div>
 
             <div class="profile-section">
@@ -212,62 +224,44 @@
             </div>
           </div>
 
-          <div class="inquiry-table-container">
+          <div class="inquiry-table-container" *ngIf="isLoading.inquiry">
+            <div class="loading-message">Loading inquiry data...</div>
+          </div>
+          
+          <div class="inquiry-table-container" *ngIf="!isLoading.inquiry && inquiryData && inquiryData.length > 0">
             <table class="inquiry-table">
               <thead>
                 <tr>
-                  <th>Inquiry #</th>
+                  <th>Document #</th>
+                  <th>Item</th>
                   <th>Date</th>
-                  <th>Subject</th>
-                  <th>Status</th>
-                  <th>Priority</th>
-                  <th>Actions</th>
+                  <th>Type</th>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Currency</th>
+                  <th>Net Value</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>INQ-2024-001</td>
-                  <td>2024-01-15</td>
-                  <td>Product Information Request</td>
-                  <td><span class="status open">Open</span></td>
-                  <td><span class="priority high">High</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>INQ-2024-002</td>
-                  <td>2024-01-20</td>
-                  <td>Pricing Inquiry</td>
-                  <td><span class="status resolved">Resolved</span></td>
-                  <td><span class="priority medium">Medium</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>INQ-2024-003</td>
-                  <td>2024-01-25</td>
-                  <td>Technical Support</td>
-                  <td><span class="status in-progress">In Progress</span></td>
-                  <td><span class="priority high">High</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>INQ-2024-004</td>
-                  <td>2024-02-01</td>
-                  <td>Order Status Check</td>
-                  <td><span class="status resolved">Resolved</span></td>
-                  <td><span class="priority low">Low</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
+                <tr *ngFor="let inquiry of inquiryData">
+                  <td>{{inquiry.VBELN || 'N/A'}}</td>
+                  <td>{{inquiry.POSNR || 'N/A'}}</td>
+                  <td>{{inquiry.ERDAT || 'N/A'}}</td>
+                  <td>{{inquiry.AUART || 'N/A'}}</td>
+                  <td>{{inquiry.MATNR || 'N/A'}}</td>
+                  <td>{{inquiry.ARKTX || 'N/A'}}</td>
+                  <td>{{inquiry.KWMENG || 0}}</td>
+                  <td>{{inquiry.WAERK || 'N/A'}}</td>
+                  <td>{{inquiry.NETWR || 0}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          
+                     <div class="inquiry-table-container" *ngIf="!isLoading.inquiry && (!inquiryData || inquiryData.length === 0)">
+             <div class="no-data-message">No inquiry data available.</div>
+           </div>
 
           <div class="summary-stats">
             <div class="stat-card">
@@ -313,62 +307,46 @@
             </div>
           </div>
 
-          <div class="saleorder-table-container">
+          <div class="saleorder-table-container" *ngIf="isLoading.sales">
+            <div class="loading-message">Loading sales order data...</div>
+          </div>
+          
+          <div class="saleorder-table-container" *ngIf="!isLoading.sales && salesData && salesData.length > 0">
             <table class="saleorder-table">
               <thead>
                 <tr>
                   <th>Order #</th>
+                  <th>Item</th>
                   <th>Date</th>
-                  <th>Items</th>
-                  <th>Total Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th>Type</th>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit</th>
+                  <th>Currency</th>
+                  <th>Net Value</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>SO-2024-001</td>
-                  <td>2024-01-10</td>
-                  <td>5 items</td>
-                  <td class="amount">$2,500.00</td>
-                  <td><span class="status completed">Completed</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>SO-2024-002</td>
-                  <td>2024-01-15</td>
-                  <td>3 items</td>
-                  <td class="amount">$1,800.00</td>
-                  <td><span class="status processing">Processing</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>SO-2024-003</td>
-                  <td>2024-01-20</td>
-                  <td>7 items</td>
-                  <td class="amount">$3,200.00</td>
-                  <td><span class="status pending">Pending</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>SO-2024-004</td>
-                  <td>2024-01-25</td>
-                  <td>2 items</td>
-                  <td class="amount">$1,500.00</td>
-                  <td><span class="status completed">Completed</span></td>
-                  <td>
-                    <button class="view-btn">View</button>
-                  </td>
+                <tr *ngFor="let sale of salesData">
+                  <td>{{sale.VBELN || 'N/A'}}</td>
+                  <td>{{sale.POSNR || 'N/A'}}</td>
+                  <td>{{sale.ERDAT || 'N/A'}}</td>
+                  <td>{{sale.AUART || 'N/A'}}</td>
+                  <td>{{sale.MATNR || 'N/A'}}</td>
+                  <td>{{sale.ARKTX || 'N/A'}}</td>
+                  <td>{{sale.KWMENG || 0}}</td>
+                  <td>{{sale.VRKME || 'N/A'}}</td>
+                  <td>{{sale.WAERK || 'N/A'}}</td>
+                  <td class="amount">{{sale.NETWR || 0}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          
+                     <div class="saleorder-table-container" *ngIf="!isLoading.sales && (!salesData || salesData.length === 0)">
+             <div class="no-data-message">No sales order data available.</div>
+           </div>
 
           <div class="summary-stats">
             <div class="stat-card">
