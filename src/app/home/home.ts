@@ -274,7 +274,22 @@ export class Home implements OnInit {
     this.isLoading.aging = true;
     this.apiService.getCustomerAging(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.agingData = response;
+        console.log('Aging response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_PAY_AGING_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_PAY_AGING_KMResponse;
+          if (sapResponse.ET_CUSTOMER_AGING?.item) {
+            this.agingData = Array.isArray(sapResponse.ET_CUSTOMER_AGING.item) 
+              ? sapResponse.ET_CUSTOMER_AGING.item 
+              : [sapResponse.ET_CUSTOMER_AGING.item];
+          } else {
+            this.agingData = [];
+          }
+        } else {
+          this.agingData = response;
+        }
+        
         this.isLoading.aging = false;
       },
       error: (error) => {
@@ -290,7 +305,22 @@ export class Home implements OnInit {
     this.isLoading.creditDebit = true;
     this.apiService.getCustomerCreditDebit(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.creditDebitData = response;
+        console.log('Credit/Debit response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_CRE_DEB_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_CRE_DEB_KMResponse;
+          if (sapResponse.ET_CRED_DEB?.item) {
+            this.creditDebitData = Array.isArray(sapResponse.ET_CRED_DEB.item) 
+              ? sapResponse.ET_CRED_DEB.item 
+              : [sapResponse.ET_CRED_DEB.item];
+          } else {
+            this.creditDebitData = [];
+          }
+        } else {
+          this.creditDebitData = response;
+        }
+        
         this.isLoading.creditDebit = false;
       },
       error: (error) => {
@@ -306,7 +336,22 @@ export class Home implements OnInit {
     this.isLoading.overallSales = true;
     this.apiService.getCustomerOverallSales(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.overallSalesData = response;
+        console.log('Overall Sales response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_OVERALL_SALES_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_OVERALL_SALES_KMResponse;
+          if (sapResponse.ET_OVERALL_SALES?.item) {
+            this.overallSalesData = Array.isArray(sapResponse.ET_OVERALL_SALES.item) 
+              ? sapResponse.ET_OVERALL_SALES.item 
+              : [sapResponse.ET_OVERALL_SALES.item];
+          } else {
+            this.overallSalesData = [];
+          }
+        } else {
+          this.overallSalesData = response;
+        }
+        
         this.isLoading.overallSales = false;
       },
       error: (error) => {
