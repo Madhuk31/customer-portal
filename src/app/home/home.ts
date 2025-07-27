@@ -150,7 +150,22 @@ export class Home implements OnInit {
     this.isLoading.inquiry = true;
     this.apiService.getCustomerInquiry(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.inquiryData = response;
+        console.log('Inquiry response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_INQUIRY_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_INQUIRY_KMResponse;
+          if (sapResponse.ET_INQUIRY?.item) {
+            this.inquiryData = Array.isArray(sapResponse.ET_INQUIRY.item) 
+              ? sapResponse.ET_INQUIRY.item 
+              : [sapResponse.ET_INQUIRY.item];
+          } else {
+            this.inquiryData = [];
+          }
+        } else {
+          this.inquiryData = response;
+        }
+        
         this.isLoading.inquiry = false;
       },
       error: (error) => {
@@ -166,7 +181,22 @@ export class Home implements OnInit {
     this.isLoading.sales = true;
     this.apiService.getCustomerSales(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.salesData = response;
+        console.log('Sales response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_SALESORDER_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_SALESORDER_KMResponse;
+          if (sapResponse.ET_SALESORDER?.item) {
+            this.salesData = Array.isArray(sapResponse.ET_SALESORDER.item) 
+              ? sapResponse.ET_SALESORDER.item 
+              : [sapResponse.ET_SALESORDER.item];
+          } else {
+            this.salesData = [];
+          }
+        } else {
+          this.salesData = response;
+        }
+        
         this.isLoading.sales = false;
       },
       error: (error) => {

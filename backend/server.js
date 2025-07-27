@@ -111,193 +111,275 @@ app.post('/custprofile', (req, res) => {
 
 // Customer inquiry endpoint
 app.post('/custinquiry', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: [
-      {
-        inquiryNumber: 'INQ001',
-        date: '2024-01-15',
-        product: 'Product A',
-        quantity: 100,
-        status: 'Open',
-        expectedDate: '2024-02-15'
-      },
-      {
-        inquiryNumber: 'INQ002',
-        date: '2024-01-20',
-        product: 'Product B',
-        quantity: 50,
-        status: 'In Progress',
-        expectedDate: '2024-02-20'
-      }
-    ]
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_INQUIRY_KM>
+         <IV_CUST_ID>${username}</IV_CUST_ID>
+      </urn:ZFM_CUST_INQUIRY_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zinquiry_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer sales order endpoint
 app.post('/custsales', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: [
-      {
-        orderNumber: 'SO001',
-        date: '2024-01-10',
-        product: 'Product A',
-        quantity: 75,
-        unitPrice: 25.00,
-        totalAmount: 1875.00,
-        status: 'Confirmed'
-      },
-      {
-        orderNumber: 'SO002',
-        date: '2024-01-25',
-        product: 'Product C',
-        quantity: 30,
-        unitPrice: 45.00,
-        totalAmount: 1350.00,
-        status: 'Processing'
-      }
-    ]
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_SALESORDER_KM>
+         <IV_CUST_ID>${username}</IV_CUST_ID>
+      </urn:ZFM_CUST_SALESORDER_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zsales_cust_portal_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer delivery endpoint
 app.post('/custdelivery', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: [
-      {
-        deliveryNumber: 'DEL001',
-        orderNumber: 'SO001',
-        date: '2024-01-18',
-        product: 'Product A',
-        quantity: 75,
-        status: 'Delivered',
-        trackingNumber: 'TRK123456'
-      },
-      {
-        deliveryNumber: 'DEL002',
-        orderNumber: 'SO002',
-        date: '2024-02-01',
-        product: 'Product C',
-        quantity: 30,
-        status: 'In Transit',
-        trackingNumber: 'TRK789012'
-      }
-    ]
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_DELIVERY_KM>
+         <IV_CUST_ID>${username}</IV_CUST_ID>
+      </urn:ZFM_CUST_DELIVERY_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zdelivery_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer invoice endpoint
 app.post('/custinvoicedisp', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: [
-      {
-        invoiceNumber: 'INV001',
-        date: '2024-01-20',
-        orderNumber: 'SO001',
-        amount: 1875.00,
-        tax: 187.50,
-        totalAmount: 2062.50,
-        dueDate: '2024-02-20',
-        status: 'Paid'
-      },
-      {
-        invoiceNumber: 'INV002',
-        date: '2024-02-05',
-        orderNumber: 'SO002',
-        amount: 1350.00,
-        tax: 135.00,
-        totalAmount: 1485.00,
-        dueDate: '2024-03-05',
-        status: 'Outstanding'
-      }
-    ]
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_INVOICE_LIST_KM>
+         <CUSTOMER_ID>${username}</CUSTOMER_ID>
+      </urn:ZFM_CUST_INVOICE_LIST_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zinvoice_display_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer aging endpoint
 app.post('/custaging', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: {
-      current: 1485.00,
-      days30: 0.00,
-      days60: 0.00,
-      days90: 0.00,
-      over90: 0.00,
-      totalOutstanding: 1485.00
-    }
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_PAY_AGING_KM>
+         <CUSTOMER_ID>${username}</CUSTOMER_ID>
+      </urn:ZFM_CUST_PAY_AGING_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zaging_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer credit/debit endpoint
 app.post('/custcred_deb', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: [
-      {
-        documentNumber: 'CM001',
-        type: 'Credit',
-        date: '2024-01-25',
-        amount: 125.00,
-        reason: 'Product return',
-        status: 'Applied'
-      },
-      {
-        documentNumber: 'DM001',
-        type: 'Debit',
-        date: '2024-02-01',
-        amount: 50.00,
-        reason: 'Late payment fee',
-        status: 'Outstanding'
-      }
-    ]
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_CRE_DEB_KM>
+         <IV_KUNNR>${username}</IV_KUNNR>
+      </urn:ZFM_CUST_CRE_DEB_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zdeb_cred_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Customer overall sales endpoint
 app.post('/custoverall_sales', (req, res) => {
-  const { username } = req.body;
-  
-  res.json({
-    status: 'success',
-    data: {
-      currentYear: {
-        year: 2024,
-        totalSales: 3225.00,
-        orderCount: 2,
-        averageOrderValue: 1612.50
-      },
-      lastYear: {
-        year: 2023,
-        totalSales: 28500.00,
-        orderCount: 18,
-        averageOrderValue: 1583.33
-      },
-      monthlyData: [
-        { month: 'Jan', sales: 1875.00 },
-        { month: 'Feb', sales: 1350.00 },
-        { month: 'Mar', sales: 0.00 },
-        { month: 'Apr', sales: 0.00 },
-        { month: 'May', sales: 0.00 },
-        { month: 'Jun', sales: 0.00 }
-      ]
-    }
-  });
+    const { username } = req.body;
+
+    const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_CUST_OVERALL_SALES_KM>
+         <IV_CUSTOMER_ID>${username}</IV_CUSTOMER_ID>
+      </urn:ZFM_CUST_OVERALL_SALES_KM>
+   </soapenv:Body>
+</soapenv:Envelope>
+    `;
+
+    const options = {
+        method: 'POST',
+        url: 'http://AZKTLDS5CP.kcloud.com:8000/sap/bc/srt/scs/sap/zfisales_cust_km?sap-client=100',
+        headers: {
+            'Content-Type': 'text/xml;charset=UTF-8',
+            'Authorization': 'Basic SzkwMTUwMzpQcmFkZWlzaDI5', // Replace with your Base64 auth
+            'Cookie': 'sap-usercontext=sap-client=100'
+        },
+        body: soapBody
+    };
+
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error("Request error:", error);
+            return res.status(500).send({ error: "Request to SAP failed" });
+        }
+
+        const x2js = new X2JS();
+        const jsonResponse = x2js.xml2js(body);
+
+        res.send(jsonResponse);
+    });
 });
 
 // Health check endpoint
