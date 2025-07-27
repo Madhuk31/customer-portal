@@ -212,7 +212,22 @@ export class Home implements OnInit {
     this.isLoading.delivery = true;
     this.apiService.getCustomerDelivery(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.deliveryData = response;
+        console.log('Delivery response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_DELIVERY_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_DELIVERY_KMResponse;
+          if (sapResponse.ET_DELIVERY?.item) {
+            this.deliveryData = Array.isArray(sapResponse.ET_DELIVERY.item) 
+              ? sapResponse.ET_DELIVERY.item 
+              : [sapResponse.ET_DELIVERY.item];
+          } else {
+            this.deliveryData = [];
+          }
+        } else {
+          this.deliveryData = response;
+        }
+        
         this.isLoading.delivery = false;
       },
       error: (error) => {
@@ -228,7 +243,22 @@ export class Home implements OnInit {
     this.isLoading.invoice = true;
     this.apiService.getCustomerInvoice(this.currentUser.username).subscribe({
       next: (response: any) => {
-        this.invoiceData = response;
+        console.log('Invoice response:', response);
+        
+        // Handle SAP response structure
+        if (response?.Envelope?.Body?.ZFM_CUST_INVOICE_LIST_KMResponse) {
+          const sapResponse = response.Envelope.Body.ZFM_CUST_INVOICE_LIST_KMResponse;
+          if (sapResponse.ET_INVOICE_LIST?.item) {
+            this.invoiceData = Array.isArray(sapResponse.ET_INVOICE_LIST.item) 
+              ? sapResponse.ET_INVOICE_LIST.item 
+              : [sapResponse.ET_INVOICE_LIST.item];
+          } else {
+            this.invoiceData = [];
+          }
+        } else {
+          this.invoiceData = response;
+        }
+        
         this.isLoading.invoice = false;
       },
       error: (error) => {
